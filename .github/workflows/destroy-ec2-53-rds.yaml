@@ -42,10 +42,9 @@ jobs:
 
       - name: Force Clean Route53 Records
         run: |
-          ZONE_ID=$(aws route53 list-hosted-zones-by-name --dns-name "app.salvador.com." --query "HostedZones[0].Id" --output text | cut -d'/' -f3)
+          ZONE_ID=$(aws route53 list-hosted-zones-by-name --dns-name "www.felipesalvador.com.br." --query "HostedZones[0].Id" --output text | cut -d'/' -f3)
           if [ "$ZONE_ID" != "None" ] && [ -n "$ZONE_ID" ]; then
-            echo "Limpando registros da zona $ZONE_ID..."
-            # Lista todos os registros que não são NS ou SOA e gera o batch de DELETE
+            echo "Cleaning zone registers from $ZONE_ID..."
             aws route53 list-resource-record-sets --hosted-zone-id $ZONE_ID --query "ResourceRecordSets[?Type != 'NS' && Type != 'SOA']" | jq '{Changes: [.[] | {Action: "DELETE", ResourceRecordSet: .}]}' > batch.json
             
             if [ $(jq '.Changes | length' batch.json) -gt 0 ]; then
