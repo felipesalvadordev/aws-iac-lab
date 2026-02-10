@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Felipe Salvador - AWS Infra</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+        }
+        h1 { color: #232f3e; margin-bottom: 0.5rem; }
+        p { color: #666; }
+        .status-box {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background: #eef2f7;
+            font-weight: bold;
+        }
+        .api-status { color: #ff9900; } /* AWS Orange */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Frontend Active</h1>
+        <p>This file is being served by <strong>S3 + CloudFront</strong>.</p>
+        
+        <div class="status-box">
+            API Status: <span id="api-status" class="api-status">Checking...</span>
+        </div>
+        
+        <p style="font-size: 0.8rem; margin-top: 2rem; color: #aaa;">
+            Domain: felipesalvador.com.br [cite: 66]
+        </p>
+    </div>
+
+    <script>
+        // Automatic connection test with your Lambda [cite: 50, 51]
+        async function checkAPI() {
+            const statusElement = document.getElementById('api-status');
+            try {
+                // Calling your API subdomain [cite: 65]
+                const response = await fetch('https://api.felipesalvador.com.br/');
+                if (response.ok) {
+                    statusElement.innerText = "Online";
+                    statusElement.style.color = "#28a745";
+                } else {
+                    statusElement.innerText = "Response Error";
+                }
+            } catch (error) {
+                statusElement.innerText = "Offline or CORS Error";
+                statusElement.style.color = "#dc3545";
+            }
+        }
+        checkAPI();
+    </script>
+</body>
+</html>
