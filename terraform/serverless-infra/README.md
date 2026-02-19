@@ -6,7 +6,7 @@
 The goal of this project is to create a serverless architecture in AWS, deploying a static website through CloudFront (using S3 as origin), an API in a Lambda, and a database using RDS.
 
 
-1. Networking Layer (VPC)
+**Networking Layer (VPC)**  
 Isolated Environment: A custom VPC with dedicated CIDR blocks and full DNS support.
 
 High Availability: Subnets are strategically distributed across three Availability Zones (AZs).
@@ -15,16 +15,27 @@ Network Segregation: Features both Public Subnets for ingress traffic and Privat
 
 Traffic Control: Dedicated Security Groups manage strict communication rules between the Lambda function and the RDS instance.
 
-2. Frontend Layer (Global Content Delivery)
+**Frontend Layer (Global Content Delivery)**  
 S3 Static Hosting: A private S3 bucket stores the web assets (e.g., index.html).
 
 Edge Distribution: AWS CloudFront serves as the global CDN to provide low-latency access.
 
 Origin Security: Utilizes Origin Access Control (OAC) to ensure that the S3 bucket is only accessible via CloudFront.
 
-Custom Domain & SSL: Fully integrated with Route 53 for DNS and AWS Certificate Manager (ACM) for automated SSL/TLS certificates.
+Custom Domain & SSL: The project uses Route 53 to manage application traffic and identity through the following registries:
 
-3. Backend & Database Layer (Serverless API)
+| Record | Final Destination | User Experience (URL) |
+| :--- | :--- | :--- |
+| **Validation** | Internal (ACM) | None (Technical use for SSL/TLS) |
+| **Admin** | CloudFront | `admin.yourdomain.com.br` |
+| **Root** | CloudFront | `yourdomain.com.br` |
+| **WWW** | CloudFront | `www.yourdomain.com.br` |
+| **API** | API Gateway | `api.yourdomain.com.br` |
+
+Also uses Certificate Manager (ACM) for automated SSL/TLS certificates.
+
+
+**Backend & Database Layer (Serverless API)**  
 Serverless Logic: An AWS Lambda function running Node.js handles application logic and database interactions.
 The AWS Lambda function serves as the core intelligence of the application, acting as a secure bridge between the public internet and the private data layer.
 
