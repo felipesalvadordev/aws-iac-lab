@@ -3,11 +3,11 @@ This repository contains AWS IaC Lab that i´ve created for my own learning.
 Infrastructures will be indepentent of programming languages.  
 
 ## List of projects:  
+[Deploy with Fargate ECS](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/fargate-ecs)  
 [Dynamic EC2 Scaling with SQS Backlog](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/auto-scaling-ec2-policy-based-on-sqs)  
 [Auto Scaling EC2 with WAF, Route 53 and Relational Database](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/auto-scaling-ec2-waf-53-rds)  
 [Serverless FullStack Infrastructure](https://github.com/felipesalvadordev/aws-iac-lab/tree/main/terraform/serverless-infra)  
 [Auto Scaling private EC2](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/auto-scaling-private-ec2)  
-[Deploy with Fargate ECS](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/fargate-ecs)  
 [Data Streaming with Kinesis, Lambda, Firehose and S3](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/kinesis-firehose-s3)  
 [Mount an AWS S3 bucket into an EC2](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/mountpoint-s3-bucket-to-ec2)  
 [VPC Peering Connection between two VPCs in same region](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/vpc-peering)  
