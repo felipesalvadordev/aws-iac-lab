@@ -47,5 +47,10 @@ resource "aws_ecs_service" "ecs_service" {
         container_port   = var.app_port
     }
 
+    capacity_provider_strategy {
+      capacity_provider = "FARGATE_SPOT"
+      weight            = 100
+    }
+
     depends_on = [aws_alb_listener.front_end, aws_iam_role_policy_attachment.ecs-task-execution-role-policy-attachment]
 }
