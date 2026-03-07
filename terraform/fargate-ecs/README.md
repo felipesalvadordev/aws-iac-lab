@@ -12,7 +12,7 @@ Serverless Compute: AWS Fargate is used to run containers without the need to pr
 
 High Availability: The architecture is designed to be highly available, running instances across multiple subnets within a Virtual Private Cloud (VPC).
 
-Scalability: An Auto Scaling Group is configured to automatically adjust the number of running containers based on demand.
+Scalability:  Auto Scaling policy with steps configuration to automatically adjust the number of running containers based on CPU usage.
 
 Load Balancing: An Application Load Balancer (ALB) distributes incoming traffic to the container instances, ensuring consistent performance.
 
