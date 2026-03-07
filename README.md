@@ -3,7 +3,7 @@ This repository contains AWS IaC Lab that i´ve created for my own learning.
 Infrastructures will be indepentent of programming languages.  
 
 ## List of projects:  
-[Deploy with Fargate ECS](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/fargate-ecs)  
+[Step Scaling with Fargate ECS](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/fargate-ecs)  
 [Dynamic EC2 Scaling with SQS Backlog](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/auto-scaling-ec2-policy-based-on-sqs)  
 [Auto Scaling EC2 with WAF, Route 53 and Relational Database](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/auto-scaling-ec2-waf-53-rds)  
 [Serverless FullStack Infrastructure](https://github.com/felipesalvadordev/aws-iac-lab/tree/main/terraform/serverless-infra)  
