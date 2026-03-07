@@ -16,6 +16,8 @@ Scalability:  Auto Scaling policy with steps configuration to automatically adju
 
 Load Balancing: An Application Load Balancer (ALB) distributes incoming traffic to the container instances, ensuring consistent performance.
 
+Target Group: It uses one with target_type = IP. Traffic is sent directly to the private IP address of each ECS task, on port 80 within the VPC, where the application is listening.
+
 Security: The setup includes configured Security Groups to control network access between different components.
 
 Logging: The architecture integrates with Amazon CloudWatch for centralized logging, providing observability into the application's performance.  
