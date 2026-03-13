@@ -5,11 +5,13 @@ This project demonstrates a real-world scenario of consolidating regional sales 
 1. Data Ingestion:
 Regional CSV files (sales_south.csv and sales_north.csv) are uploaded to the S3 bucket. These files contain raw transaction data such as product, value, and date.
 
-2. Automated Schema Inference:
+2. Data Discover:
 The Glue Crawler identifies that although the data comes from different files, they share a common structure. It creates a single sales table in the Data Catalog that represents the union of all files in the folder.
 
-3. Performance Optimization (ETL):
+3. Data Transform (ETL):
 Using Athena's CTAS (Create Table As Select), the raw CSV data is transformed into Apache Parquet.
+
+4. Data Analyze: Users run standard SQL queries in Athena to generate business insights from the optimized data.
 
 ## AWS Resources used in this project
 This project implements a serverless data pipeline with the following components:
