@@ -7,8 +7,9 @@ Infrastructures will be indepentent of programming languages.
 [Dynamic EC2 Scaling with SQS Backlog](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/auto-scaling-ec2-policy-based-on-sqs)  
 [Auto Scaling EC2 with WAF, Route 53 and Relational Database](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/auto-scaling-ec2-waf-53-rds)  
 [Serverless FullStack Infrastructure](https://github.com/felipesalvadordev/aws-iac-lab/tree/main/terraform/serverless-infra)  
-[Auto Scaling private EC2](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/auto-scaling-private-ec2)  
 [Data Streaming with Kinesis, Lambda, Firehose and S3](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/kinesis-firehose-s3)  
+[Data Lake with S3, Glue and Athena](https://github.com/felipesalvadordev/aws-iac-lab/tree/main/terraform/data-lake-s3-athena)  
+[Auto Scaling private EC2](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/auto-scaling-private-ec2)  
 [Mount an AWS S3 bucket into an EC2](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/mountpoint-s3-bucket-to-ec2)  
 [VPC Peering Connection between two VPCs in same region](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/vpc-peering)  
 [CloudWatch Monitoring + S3 + Lambda (Image Processor)](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/cloudwatch-monitoring-s3-lambda)  
@@ -32,6 +33,9 @@ Infrastructures will be indepentent of programming languages.
 
 * **Real-time Streaming:** Configured high-throughput data ingestion pipelines using **Amazon Kinesis**.
 * **Storage & Databases:** Managed **Amazon S3** buckets with automated Lifecycle Policies and handled **Amazon RDS** database instance provisioning.
+  
+### Analytics
+* **Serverless Data Integration:** Real-world scenario of consolidating regional sales data into a unified analytical layer with S3 as the data lake, Glue and Athena as ETL pipeline to transform and unify data.
 
 ### Automation & CI/CD
 
