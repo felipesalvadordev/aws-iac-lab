@@ -30,12 +30,10 @@ Infrastructures will be indepentent of programming languages.
 * **Access Control:** Enforced the **Principle of Least Privilege (PoLP)** via granular **IAM policies** and restrictive **Security Groups**.
 * **Framework Compliance:** Built architectures strictly following the **AWS Well-Architected Framework** best practices.
 
-Resilience & Disaster Recovery
-Cross-Region Failover: Engineered an automated Pilot Light disaster recovery strategy using Terraform and PowerShell.
-
-Database Promotion: Implemented logic to promote RDS Read Replicas to standalone instances, ensuring data availability in secondary regions during outages.
-
-Just-in-Time Provisioning: Optimized costs by using IaC variables to provision EC2 compute resources only when a failover is triggered, effectively reducing idle resource spend.
+### Resilience & Disaster Recovery
+* **Cross-Region Failover:** Engineered an automated  **Pilot Light** disaster recovery strategy.
+* **Database Promotion:** Implemented logic to promote **RDS** Read Replicas to standalone instances, ensuring data availability in secondary regions during outages.
+* **Just-in-Time Provisioning:** Optimized costs by using IaC variables to provision **EC2** compute resources only when a failover is triggered, effectively reducing idle resource spend.
 
 ### Data & Streaming
 
