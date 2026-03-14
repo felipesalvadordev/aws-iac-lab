@@ -9,6 +9,7 @@ Infrastructures will be indepentent of programming languages.
 [Serverless FullStack Infrastructure](https://github.com/felipesalvadordev/aws-iac-lab/tree/main/terraform/serverless-infra)  
 [Data Streaming with Kinesis, Lambda, Firehose and S3](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/kinesis-firehose-s3)  
 [Data Lake with S3, Glue and Athena](https://github.com/felipesalvadordev/aws-iac-lab/tree/main/terraform/data-lake-s3-athena)  
+[Automated Disaster Recovery (Pilot Light) with Cross-Region Failover](https://github.com/felipesalvadordev/aws-iac-lab/tree/main/terraform/pilot-light-dr-automation)  
 [Auto Scaling private EC2](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/auto-scaling-private-ec2)  
 [Mount an AWS S3 bucket into an EC2](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/mountpoint-s3-bucket-to-ec2)  
 [VPC Peering Connection between two VPCs in same region](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/vpc-peering)  
@@ -18,22 +19,33 @@ Infrastructures will be indepentent of programming languages.
 ## Implementations
 
 ### Compute & Orchestration
-* **Serverless Architecture:** Developed a full-stack serverless environment using **AWS Lambda** integrated with **API Gateway**, handling application logic and database interactions with zero server management
+* **Serverless Architecture:** Developed a full-stack serverless environment using AWS Lambda integrated with API Gateway, handling application logic and database interactions with zero server management
 * **Containers:** Deployed containerized applications using **AWS Fargate** and **Amazon ECS**, focusing on high scalability without server management overhead.
 * **Message-Driven Scaling:** Implemented **EC2 Auto Scaling** policies triggered by **Amazon SQS** backlog metrics, optimizing asynchronous processing and operational costs.
 
 ### Security & Governance
 * **Network Architecture:** Designed **VPCs** featuring public/private subnet segmentation, **NAT Gateways**, and **VPCs** with high availability across multiple Availability Zones.
-* **Domain & Traffic Management:** Managed global DNS routing via **Route 53**, integrating it with **AWS Certificate Manager (ACM)** for automated SSL/TLS certificate issuance and renewal.
-* **Edge Security:** Implemented **CloudFront** with Origin Access Control (OAC) to ensure private **S3** assets are only accessible via the CDN, reducing the attack surface.
+* **Domain & Traffic Management:** Managed global DNS routing via Amazon Route 53, integrating it with AWS Certificate Manager (ACM) for automated SSL/TLS certificate issuance and renewal.
+* **Edge Security:** Implemented CloudFront with Origin Access Control (OAC) to ensure private S3 assets are only accessible via the CDN, reducing the attack surface.
 * **Access Control:** Enforced the **Principle of Least Privilege (PoLP)** via granular **IAM policies** and restrictive **Security Groups**.
+* **Framework Compliance:** Built architectures strictly following the **AWS Well-Architected Framework** best practices.
+
+Resilience & Disaster Recovery
+Cross-Region Failover: Engineered an automated Pilot Light disaster recovery strategy using Terraform and PowerShell.
+
+Database Promotion: Implemented logic to promote RDS Read Replicas to standalone instances, ensuring data availability in secondary regions during outages.
+
+Just-in-Time Provisioning: Optimized costs by using IaC variables to provision EC2 compute resources only when a failover is triggered, effectively reducing idle resource spend.
 
 ### Data & Streaming
-* **Real-time Streaming:** Configured high-throughput data ingestion pipelines using **Amazon Kinesis** to store processed data in **S3**.
+
+* **Real-time Streaming:** Configured high-throughput data ingestion pipelines using **Amazon Kinesis**.
+* **Storage & Databases:** Managed **Amazon S3** buckets with automated Lifecycle Policies and handled **Amazon RDS** database instance provisioning.
   
 ### Analytics
-* **Serverless Data Integration:** Real-world scenario of consolidating regional sales data into a unified analytical layer with **S3** as the data lake, **Glue** as catalog and search service and **Athena** as ETL pipeline to transform, store, unify and analyse data.
+* **Serverless Data Integration:** Real-world scenario of consolidating regional sales data into a unified analytical layer with S3 as the data lake, Glue and Athena as ETL pipeline to transform and unify data.
 
 ### Automation & CI/CD
+
 * **Automated Pipelines:** Built CI/CD workflows using **GitHub Actions** for automated testing, validation, and resource provisioning.
 
