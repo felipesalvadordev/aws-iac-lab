@@ -1,0 +1,5 @@
+{
+  "project_name": "pilot-light-dr-salvador",
+  "primary_region": "us-east-1",
+  "dr_region": "us-east-2"
+}
