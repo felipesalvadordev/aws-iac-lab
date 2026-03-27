@@ -9,7 +9,7 @@ resource "aws_db_instance" "primary" {
   instance_class       = "db.t3.micro"
   db_name              = "testedr"
   username             = "admin"
-  password             = "12345678" # In production, use AWS Secrets Manager
+  password             = aws_secretsmanager_secret_version.db_password_val.secret_string
   backup_retention_period = 1 # Minimum required to enable replication
   skip_final_snapshot  = true
   db_subnet_group_name = aws_db_subnet_group.default.name
@@ -21,6 +21,7 @@ resource "aws_instance" "app_primary" {
   ami           = var.primary_ami
   instance_type = "t3.micro"
   subnet_id     = aws_subnet.subnet_1.id
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
   user_data = <<-EOF
               #!/bin/bash
               echo "DB_HOST=${aws_db_instance.primary.address}" > /etc/db_config
@@ -55,6 +56,7 @@ resource "aws_instance" "app_dr" {
   instance_type = "t3.micro"
   subnet_id           = aws_subnet.dr_subnet_1.id
   associate_public_ip_address = true
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
   
   instance_market_options {
     market_type = "spot"
