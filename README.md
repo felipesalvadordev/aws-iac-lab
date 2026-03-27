@@ -1,6 +1,6 @@
 # AWS IaC Lab
 This repository contains AWS IaC Lab that i´ve created for my own learning.  
-Infrastructures will be indepentent of programming languages.  
+Infrastructures will be independent of programming languages.  
 
 ## List of projects:  
 [Step Scaling with Fargate ECS](https://github.com/felipesalvadordev/aws-iac-samples/tree/main/terraform/fargate-ecs)  
@@ -34,6 +34,7 @@ Infrastructures will be indepentent of programming languages.
 * **Cross-Region Failover:** Engineered an automated  **Pilot Light** disaster recovery strategy.
 * **Database Promotion:** Implemented logic to promote **RDS** Read Replicas to standalone instances, ensuring data availability in secondary regions during outages.
 * **Just-in-Time Provisioning:** Optimized costs by using IaC variables to provision **EC2** compute resources only when a failover is triggered, effectively reducing idle resource spend.
+* **Automated Backup Strategy:** Implemented a centralized backup solution using **AWS Backup**, featuring automated backup plans and cross-region copies to ensure data durability across separate geographic locations.
 
 ### Data & Streaming
 
