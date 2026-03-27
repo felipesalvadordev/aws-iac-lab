@@ -59,27 +59,12 @@ To store the state in S3, the bucket and DynamoDB table must exist first.
 4.  **Migrate to Cloud**: Un-comment the backend "s3" block and run: `terraform init`
 5.  **Confirmation**: When prompted to copy local state to S3, type: yes.
 
-# S3 Bucket and Versioning
-aws s3api create-bucket --bucket pilot-light-dr-salvador-terraform-state-us-east-1 --region us-east-1
-aws s3api put-bucket-versioning --bucket pilot-light-dr-salvador-terraform-state-us-east-1 --versioning-configuration "Status=Enabled"
 
-# DynamoDB Lock Table
-aws dynamodb create-table `
-    --table-name terraform-lock-table `
-    --attribute-definitions AttributeName=LockID,AttributeType=S `
-    --key-schema AttributeName=LockID,KeyType=HASH `
-    --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 `
-    --region us-east-1
-
-# Import commands to sync state
-terraform import aws_s3_bucket.state_primary pilot-light-dr-salvador-terraform-state-us-east-1
-
-### 2. Manual Resource Import (CLI Method)
+### 2. Manual Resource Creation and Import (CLI Method)
 If resources were created via AWS CLI, bring them under Terraform control:
 
-# S3 Bucket and Versioning
 ```powershell
-# S3 Bucket and Versioning
+# S3 State Bucket Creation and Versioning
 aws s3api create-bucket --bucket pilot-light-dr-salvador-terraform-state-us-east-1 --region us-east-1
 aws s3api put-bucket-versioning --bucket pilot-light-dr-salvador-terraform-state-us-east-1 --versioning-configuration "Status=Enabled"
 
@@ -91,7 +76,7 @@ aws dynamodb create-table `
     --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 `
     --region us-east-1
 
-# Import commands to sync state
+# Commands to sync state
 terraform import aws_s3_bucket.state_primary pilot-light-dr-salvador-terraform-state-us-east-1
 terraform import aws_dynamodb_table.terraform_lock terraform-lock-table
 ```
