@@ -1,51 +1,46 @@
 const mysql = require('mysql2/promise');
 
-exports.handler = async (event) => {
-    const dbConfig = {
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
-        port: process.env.DB_PORT || 3306,
-        connectTimeout: 5000
-    };
+// Database configuration moved outside the handler for reuse across warm starts
+const dbConfig = {
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT || 3306,
+    connectTimeout: 5000
+};
 
-    let connection;
+// Global variable to persist the connection pool
+let pool;
+
+exports.handler = async (event) => {
+    // Initialize the pool only once during the container's lifecycle
+    if (!pool) {
+        pool = mysql.createPool(dbConfig);
+    }
 
     try {
-        connection = await mysql.createConnection(dbConfig);
-
-        // 1. Garante que a tabela existe
-        await connection.execute(`
-            CREATE TABLE IF NOT EXISTS api_logs (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                request_id VARCHAR(100),
-                path VARCHAR(255),
-                method VARCHAR(10),
-                ip_address VARCHAR(45),
-                user_agent TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        `);
-
-        // 2. VERIFICAÇÃO: É uma consulta do script PowerShell?
+        // 1. ADMINISTRATIVE MODE: Execute SQL queries (e.g., from PowerShell scripts)
         if (event.is_query === true) {
-            const [rows] = await connection.execute(event.sql);
+            const [rows] = await pool.execute(event.sql);
             return {
                 statusCode: 200,
-                body: JSON.stringify(rows) // Retorna os dados para o PowerShell
+                body: JSON.stringify(rows)
             };
         }
 
-        // 3. MODO PADRÃO: Registro de logs (Executado via Navegador/API)
-        const requestId = event.requestContext?.requestId || 'N/A';
-        const path = event.path || '/';
-        const method = event.httpMethod || 'GET';
-        const ip = event.requestContext?.identity?.sourceIp || '0.0.0.0';
-        const agent = event.headers?.['User-Agent'] || 'Unknown';
+        // 2. DEFAULT MODE: API Logging (Triggered via Web/API Gateway)
+        const { requestContext, path, httpMethod, headers } = event;
+        const requestId = requestContext?.requestId || 'N/A';
+        const logPath = path || '/';
+        const method = httpMethod || 'GET';
+        const ip = requestContext?.identity?.sourceIp || '0.0.0.0';
+        const agent = headers?.['User-Agent'] || 'Unknown';
 
         const insertQuery = `INSERT INTO api_logs (request_id, path, method, ip_address, user_agent) VALUES (?, ?, ?, ?, ?)`;
-        await connection.execute(insertQuery, [requestId, path, method, ip, agent]);
+        
+        // Use pool.execute for prepared statements and automatic connection management
+        await pool.execute(insertQuery, [requestId, logPath, method, ip, agent]);
 
         return {
             statusCode: 200,
@@ -53,16 +48,15 @@ exports.handler = async (event) => {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "https://felipesalvador.com.br"
             },
-            body: JSON.stringify({ message: "Sucesso!", requestId }),
+            body: JSON.stringify({ message: "Log recorded successfully!", requestId }),
         };
 
     } catch (error) {
-        console.error("Erro na Lambda:", error);
+        console.error("Lambda Error:", error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: "Falha no banco", details: error.message }),
+            body: JSON.stringify({ error: "Database operation failed", details: error.message }),
         };
-    } finally {
-        if (connection) await connection.end();
     }
+    // Optimization: We do not call pool.end() to keep connections alive for the next invocation
 };
