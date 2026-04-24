@@ -1,6 +1,8 @@
 # Data Lake Project (S3 + Athena + Glue)
 
-This project demonstrates a real-world scenario of consolidating regional sales data into a unified analytical layer.
+This project demonstrates a real-world scenario of consolidating regional sales data into a unified analytical layer.  
+
+**Data flow:** CSV Files → S3 Raw → Glue Crawler → Glue Catalog → Athena CTAS → S3 Processed (Parquet) → SQL Queries → Insights
 
 1. Data Ingestion:
 Regional CSV files (sales_south.csv and sales_north.csv) are uploaded to the S3 bucket. These files contain raw transaction data such as product, value, and date.
