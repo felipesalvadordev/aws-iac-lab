@@ -7,22 +7,22 @@ The goal of this project is to create a serverless architecture in AWS, deployin
 
 
 **Networking Layer (VPC)**  
-Isolated Environment: A custom VPC with dedicated CIDR blocks and full DNS support.
+**Isolated Environment:** A custom VPC with dedicated CIDR blocks and full DNS support.
 
-High Availability: Subnets are strategically distributed across three Availability Zones (AZs).
+**High Availability:** Subnets are strategically distributed across three Availability Zones (AZs).
 
-Network Segregation: Features both Public Subnets for ingress traffic and Private Subnets for secure backend and database hosting.
+**Network Segregation:** Features both Public Subnets for ingress traffic and Private Subnets for secure backend and database hosting.
 
-Traffic Control: Dedicated Security Groups manage strict communication rules between the Lambda function and the RDS instance.
+**Traffic Control:** Dedicated Security Groups manage strict communication rules between the Lambda function and the RDS instance.
 
 **Frontend Layer (Global Content Delivery)**  
-S3 Static Hosting: A private S3 bucket stores the web assets (e.g., index.html).
+**S3 Static Hosting:** A private S3 bucket stores the web assets (e.g., index.html).
 
-Edge Distribution: AWS CloudFront serves as the global CDN to provide low-latency access.
+**Edge Distribution:** AWS CloudFront serves as the global CDN to provide low-latency access.
 
-Origin Security: Utilizes Origin Access Control (OAC) to ensure that the S3 bucket is only accessible via CloudFront.
+**Origin Security:** Utilizes Origin Access Control (OAC) to ensure that the S3 bucket is only accessible via CloudFront.
 
-Custom Domain & SSL: The project uses Route 53 to manage application traffic and identity through the following registries:
+**Custom Domain & SSL:** The project uses Route 53 to manage application traffic and identity through the following registries:
 
 | Record | Final Destination | User Experience (URL) |
 | :--- | :--- | :--- |
@@ -34,28 +34,34 @@ Custom Domain & SSL: The project uses Route 53 to manage application traffic and
 
 Also uses Certificate Manager (ACM) for automated SSL/TLS certificates.
 
-
 **Backend & Database Layer (Serverless API)**  
 Serverless Logic: An AWS Lambda function running Node.js handles application logic and database interactions.
 The AWS Lambda function serves as the core intelligence of the application, acting as a secure bridge between the public internet and the private data layer.
 
-Secure Database Proxy: Since the RDS instance is hosted in a Private Subnet without a public IP, the Lambda function (residing within the VPC) acts as the only authorized gateway to interact with the database.
-Automated Access Logging: It automatically intercepts incoming requests from API Gateway, extracting metadata such as IP addresses, request paths, and User-Agents, and persists them into the MySQL database.
+**Secure Database Proxy:** Since the RDS instance is hosted in a Private Subnet without a public IP, the Lambda function (residing within the VPC) acts as the only authorized gateway to interact with the database.  
 
-Database Connection: The Lambda function is VPC-connected to communicate securely with the RDS instance in private subnets.
+**Private VPC Connectivity:** Because the Lambda is attached to private subnets without a NAT Gateway, any requests it makes to Amazon S3 travel internally over the AWS network through this Gateway VPC Endpoint.  
 
-REST Interface: AWS API Gateway exposes the Lambda function through a custom subdomain (api.domain.com.br).
+**Automated Access Logging:** It automatically intercepts incoming requests from API Gateway, extracting metadata such as IP addresses, request paths, and User-Agents, and persists them into the MySQL database.
 
-Managed SQL: An Amazon RDS MySQL instance provides a robust, auto-scaling relational database with automated minor version upgrades.
+**Database Connection:** The Lambda function is VPC-connected to communicate securely with the RDS instance in private subnets.
 
-Infrastructure Components
-Terraform State: Configured for remote state management via S3 to enable collaboration and safety.
+**REST Interface:** AWS API Gateway exposes the Lambda function through a custom subdomain (api.domain.com.br).
 
-IAM Security: Implements least-privilege execution roles for the Lambda function, granting access only to necessary S3 and RDS resources.
+**Managed SQL:** An Amazon RDS MySQL instance provides a robust, auto-scaling relational database with automated minor version upgrades.
 
-Environment Configuration: Key database credentials and hostnames are passed to the backend via secure Lambda environment variables.
+**Infrastructure Components**
+**Terraform State:** Configured for remote state management via S3 to enable collaboration and safety.
 
-Domain: A registered domain managed through AWS Route 53.
+**IAM Security:** Implements least-privilege execution roles for the Lambda function, granting access only to necessary S3 and RDS resources.
+
+**Environment Configuration:** Key database credentials and hostnames are passed to the backend via secure Lambda environment variables.
+
+**Domain:** A registered domain managed through AWS Route 53.
+
+**Cost Savings:** Gateway VPC Endpoints for S3 are free—unlike NAT Gateways, which incur hourly charges and data transfer fees.  
+
+**Security:** Keeps backend application traffic to S3 entirely within the AWS internal network without exposing egress traffic to public IPs.
 
 ## How to run this project
 
