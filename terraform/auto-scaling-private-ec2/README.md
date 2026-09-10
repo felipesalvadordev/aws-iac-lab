@@ -38,7 +38,7 @@ ALB listens on port 80 and forwards to Target Group (lines 202-211)
 Target Group contains EC2 instances from the Auto-Scaling Group
 Health checks determine which instances receive traffic
 
-<img width="771" height="541" alt="451143759-0560a737-3595-4f1e-8314-2615c58e1555" src="https://github.com/user-attachments/assets/9e140259-0075-48d5-a6ea-c78bdf49c45d" />
+<img width="772" height="541" alt="nat-gateway" src="https://github.com/user-attachments/assets/34017721-40d1-4a48-8c9e-c84bcf4bbd38" />
 
 https://medium.com/nerd-for-tech/auto-scaling-private-ec2-instances-with-terraform-9a7b5a079b72  
 https://spacelift.io/blog/terraform-autoscaling-group
